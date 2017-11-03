@@ -1,0 +1,47 @@
+{% load i18n %}
+
+<script type="text/javascript">
+  var folders = [];
+  {% for f in folders_queryset %}
+    folders.push({{ f.pk }});
+  {% endfor %}
+
+  function format(data) {
+    return data.name;
+  }
+
+  $(document).ready(function($) {
+    $.validate({
+      form: '#folders_form',
+      validateHiddenInputs: true,
+      lang: 'ru',
+      onSuccess : function($form) {
+        $('#submit_button').prop('disabled', true);
+      }
+    });
+
+    $("#destination").select2({
+      placeholder: "{% trans "Search by folder name" %}",
+      minimumInputLength: 4,
+      ajax: {
+        url: "{% url 'filer_folders_list' %}",
+        dataType: 'json',
+        quietMillis: 500,
+        data: function (term, page) {
+          return {
+            q: term,
+            page: page,
+            folders: folders
+          };
+        },
+        results: function (data) {
+          var more = !(data.next === null);
+          return {results: data.results, more: more};
+        }
+      },
+      formatResult: format,
+      formatSelection: format,
+      width: '50%'
+    });
+  });
+</script>

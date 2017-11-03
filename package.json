@@ -1,0 +1,21 @@
+{
+  "name": "filertools",
+  "version": "0.1.0",
+  "description": "django-filer tools and extensions",
+  "directories": {
+    "doc": "docs",
+    "example": "example",
+    "test": "tests"
+  },
+  "keywords": [
+    "django",
+    "django-filer",
+    "filer"
+  ],
+  "author": "Alexander Lebedev",
+  "license": "MIT",
+  "dependencies": {
+    "jquery-form-validator": "^2.3.77",
+    "select2": "^3.5.1"
+  }
+}

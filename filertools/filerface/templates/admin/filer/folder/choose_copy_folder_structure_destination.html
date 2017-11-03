@@ -1,0 +1,41 @@
+{% extends "admin/base.html" %}
+{% load i18n staticfiles %}
+
+{% block breadcrumbs %}
+    {% include "admin/filer/breadcrumbs.html" %}
+{% endblock %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'filertools/css/select2/select2.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'filertools/css/select2/select2-bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms.css' %}">
+{% endblock %}
+
+{% block content %}
+    <p>Следующие папки будут перенесены в выбранную папку с сохранением структуры:</p>
+    <ul>{{ to_copy|unordered_list }}</ul>
+    <form action="" method="post" id="folders_form">
+        {% csrf_token %}
+        <div>
+            {% for f in folders_queryset %}
+                <input type="hidden" name="{{ action_checkbox_name }}" value="folder-{{ f.pk }}">
+            {% endfor %}
+            <input type="hidden" name="action" value="copy_folders_structure">
+            <input type="hidden" name="post" value="yes">
+            <p>
+                <label for="destination">{% blocktrans %}Destination folder:{% endblocktrans %}</label>
+                <input type="text" name="destination" id="destination" data-validation="required">
+            </p>
+            <p><input type="submit" id="submit_button" value="{% trans 'Скопировать' %}"></p>
+        </div>
+    </form>
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script src="{% static 'filertools/js/jquery.min.js' %}"></script>
+    <script src="{% static 'filertools/js/select2/select2.js' %}"></script>
+    <script src="{% static 'filertools/js/jquery.form-validator/jquery.form-validator.min.js' %}"></script>
+    {% include 'admin/filer/folder/include/choose_destination_js.html' %}
+{% endblock %}
