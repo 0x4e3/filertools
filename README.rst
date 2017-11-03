@@ -63,6 +63,8 @@ Features
 
 * Filer menu on django-cms toolbar.
 * Filer files custom ordering in the directory listing view.
+* Async folder searching for files copy and move.
+* Coping of folder tree structure.
 
 Running Tests
 -------------
