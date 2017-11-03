@@ -48,3 +48,6 @@ docs/_build
 /example/db.sqlite3
 /node_modules/
 /example/filer_public/
+.python-version
+example/media/
+example/static/
