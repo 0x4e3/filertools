@@ -31,9 +31,19 @@ Add it to your `INSTALLED_APPS`:
 
     INSTALLED_APPS = (
         ...
-        'filertools.apps.FilertoolsConfig',
+        'filertools.filerface',
+        ...
+        'filer',
+        ...
+        'filertools.filertools',
         ...
     )
+
+Specify custom filer File model:
+
+.. code-block:: python
+
+    FILER_FILE_MODELS = ['filertools.filertools.models.OrderedFile']
 
 Add filertools's URL patterns:
 
@@ -44,14 +54,15 @@ Add filertools's URL patterns:
 
     urlpatterns = [
         ...
-        url(r'^', include(filertools_urls)),
+        url(r'^filer-api/', include('filertools.filertools.urls')),
         ...
     ]
 
 Features
 --------
 
-* TODO
+* Filer menu on django-cms toolbar.
+* Filer files custom ordering in the directory listing view.
 
 Running Tests
 -------------
@@ -63,14 +74,3 @@ Does the code actually work?
     source <YOURVIRTUALENV>/bin/activate
     (myenv) $ pip install tox
     (myenv) $ tox
-
-Credits
--------
-
-Tools used in rendering this package:
-
-*  Cookiecutter_
-*  `cookiecutter-djangopackage`_
-
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
