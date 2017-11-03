@@ -47,3 +47,4 @@ output/*/index.html
 docs/_build
 /example/db.sqlite3
 /node_modules/
+/example/filer_public/
