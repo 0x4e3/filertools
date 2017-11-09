@@ -2,6 +2,7 @@
 from __future__ import unicode_literals, absolute_import
 
 from django.contrib.contenttypes.models import ContentType
+from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
 from filer.models import File
@@ -9,10 +10,11 @@ from filertools.filertools.models import OrderedFile
 
 
 class Command(BaseCommand):
-    help = 'Closes the specified poll for voting'
+    help = 'Creates OrderFiles from Files'
 
     def handle(self, *args, **options):
         created_files_count = 0
+        folders_for_rebuild = set()
 
         ordered_file_content_type = \
             ContentType.objects.get_for_model(OrderedFile)
@@ -32,8 +34,11 @@ class Command(BaseCommand):
                 continue
 
         if created_files_count:
-            # ToDo (vladimir@makhlay.com): add management command ordering rebuild call after implementation
             self.stdout.write(
                 self.style.SUCCESS(
                     'Successfully created {} '
                     'OrderedFile`s'.format(created_files_count)))
+
+        if folders_for_rebuild:
+            for folder_id in folders_for_rebuild:
+                call_command('rebuild_order', folder_id=folder_id)
